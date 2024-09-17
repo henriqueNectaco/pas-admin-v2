@@ -97,7 +97,7 @@ export default function DropdownButton(props: TypeProps) {
   const handleTurnOffMarketplace = async () => {
     /// marketplaces/desabilitar/${props.id}
     try {
-      await axios.post(
+      await axios.put(
         `${apiUrl}/marketplaces/desabilitar/${props.id}`,
         // {
         //   marketplaceId: props.id,
