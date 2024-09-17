@@ -296,33 +296,25 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
     daysReprocessarSaldo,
   ])
   useEffect(() => {
-    // Função para fazer fetch dos dados necessários
-    const fetchData = async () => {
-      await auth()
-      await fecthTotalMarketplaceChildResgistredPreviousMonth()
-      await fetchDataServiceStatus()
-      await fechAmountData()
-      await FetchTotalProcessedYesterday()
-      await fetchsTotalProcessedToday()
-      await fetchTotalProcessedLastThirtyDays()
-      await fetchTotalProcessedThirtyDaysLater()
-      await fetchTotalMarketplaceChildRegistredLastThirtyDays()
-      await fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
-      await fetchTotalNotProcessedToday()
-      await fetchTotanNotProcessedYesterday()
-    }
-
-    // Chama fetchData inicialmente
-    fetchData()
-
-    // Define o intervalo para chamar fetchData a cada 30 segundos
-    const intervalId = setInterval(fetchDataServiceStatus, 60000)
-    const intervalIdFetchAmountData = setInterval(fechAmountData, 30000)
-
-    // Limpeza do intervalo ao desmontar o componente
-    return () => {
-      clearInterval(intervalId)
-      clearInterval(intervalIdFetchAmountData)
+    auth()
+    fecthTotalMarketplaceChildResgistredPreviousMonth()
+    fetchDataServiceStatus()
+    fechAmountData()
+    FetchTotalProcessedYesterday()
+    fetchsTotalProcessedToday()
+    fetchTotalProcessedLastThirtyDays()
+    fetchTotalProcessedThirtyDaysLater()
+    fetchTotalMarketplaceChildRegistredLastThirtyDays()
+    fetchTotalEstabelecimentsChildRegistredLastThirtyDays()
+    fetchTotalNotProcessedToday()
+    fetchTotanNotProcessedYesterday()
+    if (Router.pathname === '/dashboard') {
+      const intervalId = setInterval(fetchDataServiceStatus, 30000)
+      const intervalIdFetchAmountData = setInterval(fechAmountData, 30000)
+      return () => {
+        clearInterval(intervalId)
+        clearInterval(intervalIdFetchAmountData)
+      }
     }
   }, [])
   return (
