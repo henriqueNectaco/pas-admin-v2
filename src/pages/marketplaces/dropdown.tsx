@@ -99,6 +99,7 @@ export default function DropdownButton(props: TypeProps) {
     try {
       await axios.put(
         `${apiUrl}/marketplaces/desabilitar/${props.id}`,
+        {},
         // {
         //   marketplaceId: props.id,
         // },
