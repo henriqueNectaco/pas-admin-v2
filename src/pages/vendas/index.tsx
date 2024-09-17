@@ -72,7 +72,7 @@ export default function Vendas() {
   }
   const auth = async () => {
     try {
-      const res = await axios.post(`${apiUrl}/z1/autenticar`, { token })
+      const res = await axios.post(`${apiUrl}/autenticar`, { token })
       if (res.data.success === false) {
         toast.error('Sua sessão expirou faça login novamente')
         Router.push('/')
@@ -317,7 +317,6 @@ export default function Vendas() {
                       dados={splits}
                     />
                   )}
-
                   <div className="p-4 w-full lg:grid xl:grid lg:grid-cols-5">
                     <Button
                       fullWidth
@@ -328,38 +327,53 @@ export default function Vendas() {
                     >
                       Reprocessar Venda
                     </Button>
-                  </div>
+                  </div>{' '}
                 </div>
               )}
             </div>
           </div>
         ) : null}
         {responseData && responseZoopTransaction && (
-          <div className=" bg-gray-800 text-white   max-w-screen text-sm  grid grid-cols-1 lg:grid-cols-2  ">
-            <div className=" w-full text-left p-2  space-y-2 lg:space-y-4">
-              <p className="text-white">Vendas</p>
-              <ReactJson
-                src={responseData}
-                displayDataTypes={false}
-                theme="google"
-                indentWidth={10}
-                iconStyle="square"
-                enableClipboard={true}
-                style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
-              />
+          <div className="w-full bg-gray-800">
+            <div className="  text-white   max-w-screen text-sm  grid grid-cols-1 lg:grid-cols-2  ">
+              <div className=" w-full text-left p-2  space-y-2 lg:space-y-4">
+                <p className="text-white">Vendas</p>
+                <ReactJson
+                  src={responseData}
+                  displayDataTypes={false}
+                  theme="google"
+                  indentWidth={10}
+                  iconStyle="square"
+                  enableClipboard={true}
+                  style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
+                />
+              </div>
+              <div className=" w-full text-left  p-2 pr-0 space-y-2 lg:space-y-4 ">
+                <p className="text-white">Zoop Transactions</p>
+                <ReactJson
+                  src={responseZoopTransaction}
+                  displayDataTypes={false}
+                  theme="google"
+                  indentWidth={10}
+                  iconStyle="square"
+                  enableClipboard={true}
+                  style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
+                />
+              </div>
             </div>
-            <div className=" w-full text-left  p-2 pr-0 space-y-2 lg:space-y-4 ">
-              <p className="text-white">Zoop Transactions</p>
-              <ReactJson
-                src={responseZoopTransaction}
-                displayDataTypes={false}
-                theme="google"
-                indentWidth={10}
-                iconStyle="square"
-                enableClipboard={true}
-                style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
-              />
-            </div>
+            {responseData.pagamentos.length === 0 && (
+              <div className="p-4 w-full lg:grid xl:grid lg:grid-cols-2">
+                <Button
+                  fullWidth
+                  color="danger"
+                  variant="shadow"
+                  isLoading={isLoadingReprocessSale}
+                  onClick={handleReprocessSale}
+                >
+                  Reprocessar Venda
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </div>

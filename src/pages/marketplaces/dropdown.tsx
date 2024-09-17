@@ -16,6 +16,7 @@ import { DotsThreeOutlineVertical } from 'phosphor-react'
 import ModalMine from '@/components/modal'
 import axios from 'axios'
 import { apiPas, apiUrl, formatDateToYYYYMMDD, localUrl, today } from '@/lib'
+import { toast } from 'sonner'
 
 type TypeProps = {
   id: number
@@ -97,7 +98,7 @@ export default function DropdownButton(props: TypeProps) {
   const handleTurnOffMarketplace = async () => {
     /// marketplaces/desabilitar/${props.id}
     try {
-      await axios.put(
+      const res = await axios.put(
         `${apiUrl}/marketplaces/desabilitar/${props.id}`,
         {},
         // {
@@ -105,6 +106,9 @@ export default function DropdownButton(props: TypeProps) {
         // },
         { headers: { Authorization: `Bearer ${token}` } },
       )
+      if (res.data.success === true) {
+        toast.success('Marketplace desativado com sucesso')
+      }
     } catch (error) {
       console.error(error)
     }
