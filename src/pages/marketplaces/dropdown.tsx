@@ -61,7 +61,7 @@ export default function DropdownButton(props: TypeProps) {
         },
         //  { headers: { Authorization: `Bearer ${token}` } },
       )
-      // https://api.zsystems.com.br/marketplaces/3/cobranca-por-transacao
+      // api/marketplaces/id/cobranca-por-transacao
     } catch (error) {
       console.error(error)
     }

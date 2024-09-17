@@ -126,7 +126,7 @@ export default function Marketplace() {
 
   const handleImportAllSales = async () => {
     try {
-      // https://api.zsystems.com.br/marketplaces/importar-pedidos
+      // api/marketplaces/importar-pedidos
       const res = await axios.post(
         `${apiUrl}/marketplaces/importar-pedidos`,
         {

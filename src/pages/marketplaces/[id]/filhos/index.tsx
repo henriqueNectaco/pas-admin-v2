@@ -38,18 +38,6 @@ export default function MarketplacesFilhos({
   // const token = Cookies.get('token')
   // const { id } = router.query
   const [marketplacesChilds] = useState(data)
-  //   const fetchMarketplacesChilds = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `
-  // https://api.zsystems.com.br/marketplaces/${id}/filhos`,
-  //         { headers: { Authorization: `Bearer ${token}` } },
-  //       )
-  //       setMarketplacesChilds(res.data.estabelecimentos)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
 
   return (
     <div className="h-full max-w-screen w-full bg-gray-200 flex flex-col items-center  border-2 ">

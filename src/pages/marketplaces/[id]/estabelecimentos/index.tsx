@@ -75,38 +75,7 @@ export default function Estabelecimentos({
       console.error(error)
     }
   }
-  // const auth = async () => {
-  //   try {
-  //     const res = await axios.post(
-  //       `https://api.zsystems.com.br/z1/autenticar`,
-  //       { token },
-  //     )
-  //     if (res.data.success === false) {
-  //       toast.error('Sua sessão expirou, faça login novamente')
-  //       router.push('/')
-  //     }
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
 
-  // const fetchEstabeleciments = async () => {
-  //   try {
-  //     setEstabeleciments(null)
-  //     const res = await axios.get(
-  //       `https://api.zsystems.com.br/z1/marketplace/${id}/estabelecimentos?limit=30&page=1`,
-  //       { headers: { Authorization: `Bearer ${token}` } },
-  //     )
-  //     if (res.data.success === true) {
-  //       setEstabeleciments(res.data.estabelecimentos)
-  //       setTotalPagess(res.data.pagination.pages)
-  //     } else {
-  //       toast.error(res.data.message)
-  //     }
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
   const queryParams = {
     limit: 30,
     page,
