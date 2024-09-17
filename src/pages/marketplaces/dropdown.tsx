@@ -97,9 +97,13 @@ export default function DropdownButton(props: TypeProps) {
   const handleTurnOffMarketplace = async () => {
     /// marketplaces/desabilitar/${props.id}
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_LOCAL}/posts`, {
-        marketplaceId: props.id,
-      })
+      await axios.post(
+        `${apiUrl}/marketplaces/desabilitar/${props.id}`,
+        // {
+        //   marketplaceId: props.id,
+        // },
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
     } catch (error) {
       console.error(error)
     }
