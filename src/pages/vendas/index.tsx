@@ -33,7 +33,9 @@ export default function Vendas() {
   const handleReprocessSale = async () => {
     setIsLoadingReprocessSale(true)
     try {
-      const response = await api.get(`/vendas/${responseData?.id}/reprocessar`)
+      const response = await api.get(
+        `z1/vendas/${responseData?.id}/reprocessar`,
+      )
       if (response.data.success === true) {
         toast.success('Pedido Adicionado a fila de reprocessamento')
         setIsLoadingReprocessSale(false)
