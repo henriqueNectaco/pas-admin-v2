@@ -263,6 +263,7 @@ export default function Vendas() {
                         color="danger"
                         size="md"
                         onClick={handleReprocessSale}
+                        isLoading={isLoadingReprocessSale}
                       >
                         Reprocessar venda
                       </Button>
