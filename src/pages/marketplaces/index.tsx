@@ -85,7 +85,7 @@ export default function Marketplace() {
   )
   const fetchMarketplaces = async () => {
     try {
-      const res = await api.get(`/marketplaces?status=ativo`)
+      const res = await api.get(`/z1/marketplaces?status=ativo`)
       if (res.data.success === true) {
         setResData(res.data.marketplaces)
       }
