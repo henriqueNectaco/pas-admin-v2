@@ -94,7 +94,7 @@ export default function CadastrarMarketplaces() {
         {},
         { headers: { Authorization: `Bearer ${token}` } },
       )
-      if (res.data.succes === true) {
+      if (res.data.success === true) {
         toast.success('Rotina iniciada com sucesso!')
         setActiveStep(activeStep + 1)
       }
@@ -153,7 +153,7 @@ export default function CadastrarMarketplaces() {
           },
         },
       )
-      if (res.data.succes === true) {
+      if (res.data.success === true) {
         toast.success('Marketplace cadastrado com sucesso!')
         setMarketplaceId(res.data.marketplace.id)
         setActiveStep(activeStep + 1)
