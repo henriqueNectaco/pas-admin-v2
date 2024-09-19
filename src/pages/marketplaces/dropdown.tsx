@@ -29,7 +29,7 @@ export default function DropdownButton(props: TypeProps) {
     amount: undefined,
     cobrancaPorTransacao: undefined,
   })
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const [modalProps, setModalProps] = useState({
     action: 'Confirmar',
     useTaxForTransaction: false,
@@ -68,7 +68,7 @@ export default function DropdownButton(props: TypeProps) {
   }
   const importarECs = async () => {
     try {
-      await axios.post(
+      const res = await axios.post(
         `${apiPas}/marketplace/import-establishment`,
         {
           startDate: formatDateToYYYYMMDD(value.start),
@@ -77,13 +77,17 @@ export default function DropdownButton(props: TypeProps) {
         },
         { headers: { Authorization: `Bearer ${token}` } },
       )
+      if (res.data.success === true) {
+        toast.success('Adicionado a fila com sucesso')
+        onClose()
+      }
     } catch (error) {
       console.error(error)
     }
   }
   const importarVendas = async () => {
     try {
-      await axios.post(
+      const res = await axios.post(
         `${apiPas}/marketplaces/${props.id}/importar-pedidos`,
         {
           startDate: formatDateToYYYYMMDD(value.start),
@@ -91,23 +95,24 @@ export default function DropdownButton(props: TypeProps) {
         },
         { headers: { Authorization: `Bearer ${token}` } },
       )
+      if (res.data.success === true) {
+        toast.success('Adicionado a fila!')
+        onClose()
+      }
     } catch (error) {
       console.error(error)
     }
   }
   const handleTurnOffMarketplace = async () => {
-    /// marketplaces/desabilitar/${props.id}
     try {
       const res = await axios.put(
         `${apiUrl}/marketplaces/desabilitar/${props.id}`,
         {},
-        // {
-        //   marketplaceId: props.id,
-        // },
         { headers: { Authorization: `Bearer ${token}` } },
       )
       if (res.data.success === true) {
         toast.success('Marketplace desativado com sucesso')
+        onClose()
       }
     } catch (error) {
       console.error(error)
@@ -146,7 +151,9 @@ export default function DropdownButton(props: TypeProps) {
       case 'Cobrança por transação':
         cobrancaTransacao()
         break
-      case 'Adicionar SSL':
+      case 'teste':
+        onClose()
+        break
       default:
         console.log('outro')
         break
@@ -222,6 +229,17 @@ export default function DropdownButton(props: TypeProps) {
               }))
               onOpen()
             }
+            // else if (key === 'teste') {
+            //   setModalProps((prev) => ({
+            //     ...prev,
+            //     action: 'teste',
+            //     useDatePicker: true,
+            //     useTaxForTransaction: false,
+            //     useDesativar: false,
+            //   }))
+            //   onOpen()
+            //   alert('menor gay')
+            // }
           }}
           color="primary"
           variant="solid"
@@ -244,6 +262,7 @@ export default function DropdownButton(props: TypeProps) {
           <DropdownItem key="importSales">Importar Vendas</DropdownItem>
           <DropdownItem key="renewcache">Renovar Cache</DropdownItem>
           <DropdownItem key="desativar">Desativar</DropdownItem>
+          {/* <DropdownItem key="teste">teste</DropdownItem> */}
         </DropdownMenu>
       </Dropdown>
       <ModalMine
