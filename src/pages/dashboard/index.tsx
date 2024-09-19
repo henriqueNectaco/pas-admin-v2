@@ -48,9 +48,7 @@ export default function DashBoard() {
   const [servicesStatus, setServicesStatus] = useState<typeServices[] | null>(
     [],
   )
-  const [isDisabledReprocessSales, setIsDisabledReprocessSales] = useState(true)
-  const [isDisabledReprocessarSaldo, setIsDisabledReprocessarSaldo] =
-    useState(true)
+
   const [isLoadingReprocessarSaldo, setIsLoadingReprocessarSaldo] =
     useState<boolean>(false)
   const [isLoadingReprocessarVenda, setIsLoadingReprocessarVenda] =
@@ -254,6 +252,11 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
     }
   }
   const fechAmountData = async () => {
+    setData((prevData) => ({
+      ...prevData,
+      totalVendido: undefined,
+      numVendas: null,
+    }))
     try {
       const response = await axios.get(`${apiUrl}/z1/indicadores`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -279,22 +282,7 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
       console.error(error)
     }
   }
-  useEffect(() => {
-    if (!idEstabelecimentoReprocessarVenda) {
-      setIsDisabledReprocessSales(true)
-    } else {
-      setIsDisabledReprocessSales(false)
-    }
-    if (!idEstabelecimentoReprocessarSaldo || !daysReprocessarSaldo) {
-      setIsDisabledReprocessarSaldo(true)
-    } else {
-      setIsDisabledReprocessarSaldo(false)
-    }
-  }, [
-    idEstabelecimentoReprocessarVenda,
-    idEstabelecimentoReprocessarSaldo,
-    daysReprocessarSaldo,
-  ])
+
   useEffect(() => {
     auth()
     fecthTotalMarketplaceChildResgistredPreviousMonth()
@@ -319,11 +307,13 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
   }, [])
   return (
     <div className=" h-screen max-w-screen flex flex-col items-center    ">
-      <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start  lg:pt-10 ">
+      <div className=" h-screen    w-full  max-w-screen flex flex-col items-center justify-start sm:p-4  lg:pt-10 ">
         <DashComponent
           data={data}
-          isDisabledReprocessSale={isDisabledReprocessSales}
-          isDisabledReprocessarSaldo={isDisabledReprocessarSaldo}
+          isDisabledReprocessSale={!idEstabelecimentoReprocessarVenda}
+          isDisabledReprocessarSaldo={
+            !idEstabelecimentoReprocessarSaldo || !daysReprocessarSaldo
+          }
           isLoadingReprocessarVenda={isLoadingReprocessarVenda}
           isLoadingReprocessarSaldo={isLoadingReprocessarSaldo}
           setValue={setValue}

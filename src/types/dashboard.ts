@@ -38,7 +38,7 @@ export type TypePropsDashComponent = {
     totalProcessadoMesAtual: number
     totalEstabelecimentosFilhosRegistradosUltimosTrintaDias: number
     totalMarketplaceChildResgiteredLastThirtyDays: number
-    numVendas: number
+    numVendas: number | null
     processadosHoje: number | null
     processadosOntem: number | null
     processadosMesAtual: number | null
@@ -59,7 +59,7 @@ export type typeDataDashboard = {
   totalProcessadoMesAtual: number
   totalEstabelecimentosFilhosRegistradosUltimosTrintaDias: number
   totalMarketplaceChildResgiteredLastThirtyDays: number
-  numVendas: number
+  numVendas: number | null
   processadosHoje: number | null
   processadosOntem: number | null
   processadosMesAtual: number | null
