@@ -23,7 +23,7 @@ export default function ModalMine(props: ModalTypes) {
   return (
     <>
       <Modal
-        className={`p-2  md:1/3 lg:w-1/4 w-full ${props.modalProps?.useDatePicker === true && ' w-full'} ${props.modalProps?.useDropdownChangeParents === true && 'lg:h-[20vh] '} ${props.modalProps?.useDesativar === true && 'lg:h-[20vh] lg:w-[20vw] '} ${props.modalProps?.useTaxForTransaction === true && 'h-[80vh] lg:h-[40vh]'} max-w-[90vw] `}
+        className={`p-2  md:1/3 lg:w-1/4 w-full ${props.modalProps?.useDatePicker === true && ' w-full'} ${props.modalProps?.useDropdownChangeParents === true && 'lg:h-[20vh] '} ${props.modalProps?.useDesativar === true && 'lg:h-[20vh] lg:w-[20vw] '} ${props.modalProps?.useTaxForTransaction === true && 'p-4'} max-w-[90vw] `}
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         placement="center"
@@ -99,13 +99,13 @@ export default function ModalMine(props: ModalTypes) {
                     <div className="flex flex-col lg:flex-row w-full">
                       <div className="flex w-full flex-col lg:flex-row gap-4">
                         <p className="font-semibold text-md">Valor</p>
-                        <p>teste</p>
+                        {/* <p>teste</p> */}
                       </div>
                       <div className="w-full gap-4 flex flex-col lg:flex-row">
                         <p className="font-semibold text-md">
                           Email de Recebimento:
                         </p>
-                        <p>teste</p>
+                        {/* <p>teste</p> */}
                       </div>
                     </div>
 

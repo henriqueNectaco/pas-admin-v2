@@ -15,7 +15,7 @@ import {
 import { DotsThreeOutlineVertical } from 'phosphor-react'
 import ModalMine from '@/components/modal'
 import axios from 'axios'
-import { apiPas, apiUrl, formatDateToYYYYMMDD, localUrl, today } from '@/lib'
+import { apiPas, apiUrl, formatDateToYYYYMMDD, today } from '@/lib'
 import { toast } from 'sonner'
 
 type TypeProps = {
@@ -52,15 +52,24 @@ export default function DropdownButton(props: TypeProps) {
   }
   const cobrancaTransacao = async () => {
     try {
-      await axios.post(
-        `${localUrl}/cobrancaportransacao`,
+      const res = await axios.post(
+        `${apiUrl}/marketplaces/${props.id}/cobranca-por-transacao`,
         {
-          id: props.id,
+          cobrancaPorTransacao: true,
           amount: dataTaxTransaction.amount,
           email: dataTaxTransaction.email,
         },
-        //  { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } },
       )
+      if (res.data.success) {
+        setDataTaxTransaction((prev) => ({
+          ...prev,
+          amount: undefined,
+          email: undefined,
+        }))
+        toast.success('Cobrança cadastrada com sucesso!')
+        onClose()
+      }
       // api/marketplaces/id/cobranca-por-transacao
     } catch (error) {
       console.error(error)
