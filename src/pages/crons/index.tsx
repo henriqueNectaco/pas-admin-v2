@@ -9,9 +9,9 @@ import { apiUrl } from '@/lib'
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
 
-  const authRes = await axios.post(`${apiUrl}/z1/autenticar`, { token })
+  const auth = await axios.post(`${apiUrl}/z1/autenticar`, { token })
 
-  if (authRes.data.success === false) {
+  if (auth.data.success === false) {
     return {
       redirect: {
         destination: '/',
@@ -20,11 +20,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
-  const cronsRes = await axios.get(`${apiUrl}/z1/crons/logs`, {
+  const getCrons = await axios.get(`${apiUrl}/z1/crons/logs`, {
     headers: { Authorization: `Bearer ${token}` },
   })
 
-  return { props: { data: cronsRes.data.cronsLogs } }
+  return { props: { data: getCrons.data.cronsLogs } }
 }
 
 export default function Crons({
