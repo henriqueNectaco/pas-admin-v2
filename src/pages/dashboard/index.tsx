@@ -297,7 +297,7 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
     fetchTotalNotProcessedToday()
     fetchTotanNotProcessedYesterday()
     if (Router.pathname === '/dashboard') {
-      const intervalId = setInterval(fetchDataServiceStatus, 30000)
+      const intervalId = setInterval(fetchDataServiceStatus, 60000)
       const intervalIdFetchAmountData = setInterval(fechAmountData, 30000)
       return () => {
         clearInterval(intervalId)
