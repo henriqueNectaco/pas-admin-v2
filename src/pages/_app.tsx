@@ -16,10 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const noHeaderRoutes = ['/']
   const selectedRoutes = [
     '/dashboard',
-    '/marketplaces/cadastrar',
-    /^\/marketplaces\/\d+\/cadastrar-filho$/,
     '/marketplaces/[id]/[nomefantasia]/adicionar-ssl',
-    '/marketplaces/[id]/cadastrar-filho',
     '/marketplaces/[id]/renovar-cache',
   ]
   const showSiderbar = () => setSidebar(!sidebar)
