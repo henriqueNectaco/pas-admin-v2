@@ -273,7 +273,7 @@ ${apiPas}/sale/total-not-processed?startDate=${today}&endDate=${today}`,
 
   const auth = async () => {
     try {
-      const res = await axios.post(`${apiUrl}/z1/autenticar`, { token })
+      const res = await axios.post(`${apiUrl}/autenticar`, { token })
       if (res.data.success === false) {
         toast.error('Sua sessão expirou faça login novamente')
         Router.push('/')
