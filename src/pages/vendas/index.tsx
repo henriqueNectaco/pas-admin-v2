@@ -10,7 +10,8 @@ import Router from 'next/router'
 import { typeResponseData, ZoopTransaction } from '@/types/vendas'
 import { api, apiUrl } from '../api/useApi'
 import PagamentosCards from './pagamentosCards'
-import { arrayOfObjectsSumJs, formatarData } from '@/lib/sum'
+import { arrayOfObjectsSumJs, formatarData, tabelaMarkupSum } from '@/lib/sum'
+import { formaterSales } from '@/lib'
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false }) // Dynamically import react-json-view
 export default function Vendas() {
   const [pagamentos, setPagamentos] = useState()
@@ -115,17 +116,17 @@ export default function Vendas() {
                 <div className=" pr-2">
                   <div className="   flex  flex-row items-start justify-between">
                     <p>Valor</p>
-                    <p>{responseData.valor_bruto}</p>
+                    <p>{formaterSales(responseData.valor_bruto)}</p>
                   </div>
                   <div className="   flex flex-col lg:flex-row items-start justify-between">
                     <p>Valor liquido</p>
-                    <p>{responseData.valor_liquido}</p>
+                    <p>{formaterSales(responseData.valor_liquido)}</p>
                   </div>
                   <div className="   flex  flex-row items-start justify-between">
                     <p>Taxa Custos</p>
 
                     {responseData.pagamentos.length > 0 ? (
-                      <p>{responseData.pagamentos[0].taxa}</p>
+                      <p>{formaterSales(responseData.pagamentos[0].taxa)}</p>
                     ) : (
                       <p>0</p>
                     )}
@@ -133,22 +134,31 @@ export default function Vendas() {
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Markup</p>
-                    <p>{responseZoopTransaction?.payment_method.card_brand}</p>
+                    <p>
+                      {responseData.markup === null
+                        ? formaterSales(0)
+                        : responseData.markup}
+                    </p>
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Tabela de Markup</p>
-                    {responseData.markup === null ? (
-                      <p>0</p>
-                    ) : (
-                      <p>{responseData.pagamentos[0].markup}</p>
-                    )}
+                    <p>
+                      {responseData.pedidos_splits.length > 1
+                        ? formaterSales(
+                            tabelaMarkupSum(
+                              responseData.pedidos_splits,
+                              [2, 6],
+                            ),
+                          )
+                        : 0}
+                    </p>
                   </div>
                   <div className="   flex flex-row items-start justify-between">
                     <p>Splits</p>
                     <p>
                       {responseData.pedidos_splits.length === 0
                         ? 0
-                        : somaSplits}
+                        : formaterSales(somaSplits)}
                       {/* {responseData.pedidos_splits.length} */}
                     </p>
                   </div>
@@ -160,7 +170,7 @@ export default function Vendas() {
               <div className=" h-full w-full space-y-4  text-white">
                 <div>
                   <h1 className="font-bold">Estabelecimento</h1>
-                  <p>{responseData.estabelecimento.razao_social} </p>
+                  <p>{responseData.estabelecimento.nome_fantasia} </p>
                 </div>
 
                 <div className=" pr-2">
@@ -197,12 +207,10 @@ export default function Vendas() {
             </div>
           ) : null}
         </div>
-        {responseData !== null ? (
-          <div
-            className={`${responseData.pagamentos.length === 1 ? 'p-3 lg:pr-0' : ''}`}
-          >
+        {responseData !== null && (
+          <div>
             <div
-              className={`"w-full max-w-screen flex  ${responseData.pagamentos.length >= 3 ? '' : 'bg-white rounded-lg p-2'}    flex-col items-center  justify-center "`}
+              className={`"w-full max-w-screen flex  ${responseData.pagamentos.length >= 3 ? '' : 'bg-white rounded-lg p-4'}    flex-col items-center  justify-center "`}
             >
               {responseData.pagamentos.length === 1 && (
                 <>
@@ -298,28 +306,6 @@ export default function Vendas() {
                       'data_recebimento',
                     ]}
                   />
-                  {responseData.pedidos_splits.length >= 1 && (
-                    <PagamentosCards
-                      isLoadingReprocessSale={isLoadingReprocessSale}
-                      currentComponent={'splits'}
-                      titulo={'Splits'}
-                      arrayTittles={[
-                        'Id',
-                        'Estabelecimento',
-                        'Tipo',
-                        'Categoria',
-                        'Valor',
-                      ]}
-                      contentArray={[
-                        'id',
-                        'nome_fantasia',
-                        'tipo_split',
-                        'categoria',
-                        'valor',
-                      ]}
-                      dados={splits}
-                    />
-                  )}
                   <div className="p-4 w-full lg:grid xl:grid lg:grid-cols-5">
                     <Button
                       fullWidth
@@ -333,9 +319,31 @@ export default function Vendas() {
                   </div>{' '}
                 </div>
               )}
+              {responseData.pedidos_splits.length >= 1 && (
+                <PagamentosCards
+                  isLoadingReprocessSale={isLoadingReprocessSale}
+                  currentComponent={'splits'}
+                  titulo={'Splits'}
+                  arrayTittles={[
+                    'Id',
+                    'Estabelecimento',
+                    'Tipo',
+                    'Categoria',
+                    'Valor',
+                  ]}
+                  contentArray={[
+                    'id',
+                    'nome_fantasia',
+                    'tipo_split',
+                    'categoria',
+                    'valor',
+                  ]}
+                  dados={splits}
+                />
+              )}
             </div>
           </div>
-        ) : null}
+        )}
         {responseData && responseZoopTransaction && (
           <div className="w-full bg-gray-800">
             <div className="  text-white   max-w-screen text-sm  grid grid-cols-1 lg:grid-cols-2  ">
