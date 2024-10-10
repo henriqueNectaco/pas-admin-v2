@@ -22,3 +22,8 @@ export function formatarData(dataString) {
 
   return dataFormatada
 }
+export function tabelaMarkupSum(v, categorias) {
+  return v
+    .filter((pedido) => categorias.includes(pedido.categoria))
+    .reduce((total, pedido) => total + +pedido.zoop_amount, 0)
+}

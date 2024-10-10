@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react'
 
 type EstabelecimentoType = {
   razao_social: string
+  nome_fantasia: string
   marketplace: {
     nome: string
   }

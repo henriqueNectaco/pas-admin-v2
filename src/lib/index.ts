@@ -161,3 +161,6 @@ export function formatDateRangeTimer(dateObj: DateObjectTimer) {
 
   return `${year}-${month}-${day} ${hour}:${minute}`
 }
+export function formaterSales(value: number) {
+  return value.toString().replace('.', ',')
+}
