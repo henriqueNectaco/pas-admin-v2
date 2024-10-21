@@ -6,6 +6,13 @@ type PropsType = {
   setValue: (value: RangeValue<DateValue>) => void | undefined
 }
 export default function DateRangeWithTimer(props: PropsType) {
+  const today = new Date()
+  const startDate = parseZonedDateTime(
+    today.toISOString().split('T')[0] + 'T00:00[America/Sao_Paulo]',
+  )
+  const endDate = parseZonedDateTime(
+    today.toISOString().split('T')[0] + 'T23:59[America/Sao_Paulo]',
+  )
   // const [value, setValue] = React.useState({
   //   start: parseZonedDateTime('2024-04-01T00:00[America/Sao_Paulo]'),
   //   end: parseZonedDateTime('2024-04-08T00:00[America/Sao_Paulo]'),
@@ -25,8 +32,8 @@ export default function DateRangeWithTimer(props: PropsType) {
         hideTimeZone
         visibleMonths={2}
         defaultValue={{
-          start: parseZonedDateTime('2024-04-01T00:45[America/Sao_Paulo]'),
-          end: parseZonedDateTime('2024-04-08T11:15[America/Sao_Paulo]'),
+          start: startDate,
+          end: endDate,
         }}
         onChange={props.setValue}
       />
