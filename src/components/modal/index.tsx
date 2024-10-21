@@ -23,7 +23,7 @@ export default function ModalMine(props: ModalTypes) {
   return (
     <>
       <Modal
-        className={`p-2  md:1/3 lg:w-1/4 w-full ${props.modalProps?.useDatePicker === true && ' w-full'} ${props.modalProps?.useDropdownChangeParents === true && 'lg:h-[20vh] '} ${props.modalProps?.useDesativar === true && 'lg:h-[20vh] lg:w-[20vw] '} ${props.modalProps?.useTaxForTransaction === true && 'p-4'} max-w-[90vw] `}
+        className={`p-2  md:1/3 lg:w-1/4 w-full  ${props.modalProps?.useDatePicker === true && ' w-full'} ${props.modalProps?.useDropdownChangeParents === true && 'lg:h-[20vh] '} ${props.modalProps?.useDesativar === true && 'lg:h-[20vh] lg:w-[20vw] '} ${props.modalProps?.useTaxForTransaction === true && 'p-4'} max-w-[90vw] `}
         isOpen={props.isOpen}
         onOpenChange={props.onOpenChange}
         placement="center"
