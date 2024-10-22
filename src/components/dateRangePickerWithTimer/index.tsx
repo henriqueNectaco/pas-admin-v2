@@ -13,16 +13,6 @@ export default function DateRangeWithTimer(props: PropsType) {
   const endDate = parseZonedDateTime(
     today.toISOString().split('T')[0] + 'T23:59[America/Sao_Paulo]',
   )
-  // const [value, setValue] = React.useState({
-  //   start: parseZonedDateTime('2024-04-01T00:00[America/Sao_Paulo]'),
-  //   end: parseZonedDateTime('2024-04-08T00:00[America/Sao_Paulo]'),
-  // })
-
-  // useEffect(() => {
-  //   console.log(
-  //     formatDateRangeTimer(value.start) + formatDateRangeTimer(value.end),
-  //   )
-  // }, [value])
 
   return (
     <div className="w-full max-w-xl flex flex-row gap-4">
