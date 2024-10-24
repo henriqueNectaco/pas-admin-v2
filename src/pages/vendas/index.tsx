@@ -45,7 +45,8 @@ export default function Vendas() {
       console.error(error)
     }
   }
-  const handleSearch = async () => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setIsLoadingSearchSale(true)
     try {
       if (vendaId === '') {
@@ -71,6 +72,9 @@ export default function Vendas() {
     } catch (error) {
       console.error(error)
       setIsLoadingSearchSale(false)
+      toast.warning(
+        'alo inesperado ocorreu :( verifiquei o console e a aba network',
+      )
     }
   }
   const auth = async () => {
@@ -103,7 +107,6 @@ export default function Vendas() {
             handleCleanInput={handleCleanInput}
             vendaId={vendaId}
             setInputIdDaVenda={setVendaId}
-            handleSearch={handleSearch}
           />
           {responseData ? (
             <div className=" bg-mygray p-4 lg:w-4/6 gap-4 w-full h-full flex flex-col lg:grid lg:grid-cols-2">
