@@ -26,19 +26,20 @@ export default function FormVendas(props: FormVendasTypes) {
         </div>
 
         <div className="flex   items-center justify-center  gap-2   w-5/6 lg:w-3/6   mt-4 lg:mt-6">
+          {props.vendaId && (
+            <Button onClick={props.handleCleanInput} color="danger">
+              Limpar
+            </Button>
+          )}
           <Button
-            onClick={props.handleSearch}
+            type="submit"
+            // onClick={props.handleSearchOnClick}
             color="primary"
             variant="shadow"
             isLoading={props.Isloading}
           >
             Consultar
           </Button>
-          {props.vendaId && (
-            <Button onClick={props.handleCleanInput} color="danger">
-              Limpar
-            </Button>
-          )}
         </div>
       </form>
     </>

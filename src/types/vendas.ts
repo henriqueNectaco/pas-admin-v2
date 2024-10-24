@@ -40,11 +40,10 @@ export interface typePagament {
   status_pagamento_id: string
 }
 export type FormVendasTypes = {
-  onSubmit: () => void
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   Isloading: boolean
   setInputIdDaVenda: Dispatch<SetStateAction<string | undefined>>
   vendaId: string | undefined
-  handleSearch: () => void
   handleCleanInput: () => void
 }
 
