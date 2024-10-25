@@ -64,7 +64,7 @@ export default function CadastrarFilho() {
 
   const fetchMarketplace = async () => {
     try {
-      const res = await axios.get(`${apiUrl}/marketplace/${id}`, {
+      const res = await axios.get(`${apiUrl}/z1/marketplace/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       setMarketplaceId(res.data.marketplace.id)
@@ -170,6 +170,7 @@ export default function CadastrarFilho() {
   }
 
   useEffect(() => {
+    console.log(id)
     auth()
     fetchMarketplace()
     searchEstabeleciment()
