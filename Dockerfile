@@ -18,7 +18,6 @@ RUN if [ -f ".env" ]; then rm .env; fi && \
     echo "SKIP_PREFLIGHT_CHECK=true" >> .env && \
     echo "REACT_APP_ENV=development" >> .env
 
-# Set environment variables for Next.js
 ENV NEXT_PUBLIC_API_URL=https://api.zsystems.com.br/
 ENV NEXT_PUBLIC_API_PAS=https://pas.nectaco.com.br/
 
