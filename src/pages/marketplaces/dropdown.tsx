@@ -97,7 +97,7 @@ export default function DropdownButton(props: TypeProps) {
   const importarVendas = async () => {
     try {
       const res = await axios.post(
-        `${apiPas}/marketplaces/${props.id}/importar-pedidos`,
+        `${apiUrl}/marketplaces/${props.id}/importar-pedidos`,
         {
           startDate: formatDateToYYYYMMDD(value.start),
           endDate: formatDateToYYYYMMDD(value.end),
