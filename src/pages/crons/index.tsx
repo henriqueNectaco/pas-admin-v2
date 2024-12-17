@@ -9,16 +9,16 @@ import { apiUrl } from '@/lib'
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
 
-  const auth = await axios.post(`${apiUrl}/autenticar`, { token })
+  //  const auth = await axios.post(`${apiUrl}/autenticar`, { token })
 
-  if (auth.data.success === false) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
+  // if (auth.data.success === false) {
+  //   return {
+  //     redirect: {
+  //       destination: '/',
+  //       permanent: false,
+  //     },
+  //   }
+  // }
 
   const getCrons = await axios.get(`${apiUrl}/z1/crons/logs`, {
     headers: { Authorization: `Bearer ${token}` },

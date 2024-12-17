@@ -38,7 +38,7 @@ export default function Home() {
   const onSubmit = async (data: FormschemaData) => {
     try {
       setIsLoading(true)
-      const response = await axios.post(`${apiUrl}/login`, data)
+      const response = await axios.post(`${apiUrl}/z1/login`, data)
       if (response.data.success === true) {
         Cookies.set('token', response.data.usuario.token)
         toast.success('Login realizado com sucesso!')
@@ -46,18 +46,27 @@ export default function Home() {
         router.push('/dashboard')
       } else {
         setIsLoading(false)
-        toast.error('Login não encontrado')
+        toast.warning(response.data.message)
       }
     } catch (error) {
       setIsLoading(false)
       console.log(error)
-      toast.error('Algo inesperado aconteceu')
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          // Erro do servidor com status code
+          toast.error(error.response.data.message || 'Erro no servidor!')
+        } else if (error.request) {
+          toast.error('Erro de rede: Não foi possível conectar ao servidor.')
+        }
+      } else {
+        toast.error('Ocorreu um erro inesperado. Tente novamente.')
+      }
     }
   }
 
   const auth = async () => {
     try {
-      const response = await axios.post(`${apiUrl}/autenticar`, {
+      const response = await axios.post(`${apiUrl}/z1/autenticar`, {
         token: Cookies.get('token'),
       })
       if (response.data.success === true) {
@@ -74,7 +83,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center lg:p-16">
+    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-screen w-screen flex justify-center items-center lg:p-32">
       <div className=" h-full md:h-4/6 lg:w-4/6 lg:h-4/6 shadow-2xl bg-white  sm:flex sm:flex-col sm:justify-center sm:items-center  md:flex md:flex-col md:items-center md:justify-center  sm:p-0 lg:grid lg:grid-cols-2  lg:rounded-md">
         <div className=" lg:rounded-2xl lg:col-start-1 lg:col-end-2 flex justify-center items-center bg-white lg:h-full p-4  ">
           <Image
@@ -86,11 +95,11 @@ export default function Home() {
           />
         </div>
         <div className="border-l-2  border-gray-300 rounded-r-2xl lg:col-start-2 lg:col-end-3 bg-white max-w-screen-xl mx-auto w-full h-full lg:flex sm:flex sm:flex-col sm:items-center sm:justify-center lg:flex-col lg:items-center lg:justify-center  lg:pt-12 p-4">
-          <div className="flex flex-col items-center justify-center  lg:w-full lg:h-full max-w-screen-xl mx-auto w-full m-0 h-full sm:h-full p-4 ">
-            <h1 className="text-2xl lg:text-3xl">Entrar</h1>
+          <div className=" flex flex-col items-center justify-center  lg:w-full lg:h-full max-w-screen-xl mx-auto w-full m-0 h-full sm:h-full p-4 ">
+            <h1 className=" text-2xl lg:text-3xl">Entrar</h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="  mt-2 w-full    h-full flex flex-col items-center justify-start lg:justify-center "
+              className="mb-8 lg:mb-0  mt-2 lg:mt-8 w-full    h-full flex flex-col items-center justify-center lg:justify-start lg:justify-center "
             >
               <div className=" w-full lg:p-4 flex flex-col gap-3">
                 <label htmlFor="email" className="block lg:text-base">
@@ -108,7 +117,7 @@ export default function Home() {
                   </span>
                 )}
               </div>
-              <div className="w-full lg:p-4  flex flex-col gap-3 ">
+              <div className="w-full lg:p-4 lg:pb-0  flex flex-col gap-3 ">
                 <label htmlFor="password" className="  lg:text-base">
                   Senha:
                 </label>
@@ -144,7 +153,7 @@ export default function Home() {
                   </span>
                 )}
               </div>
-              <div className=" lg:p-4  h-1/4 w-full flex flex-col items-center justify-center lg:justify-start  gap-2 lg:gap-4 ">
+              <div className=" lg:p-4  h-1/4 w-full flex flex-col items-center justify-center   gap-2 lg:gap-4 ">
                 <Button
                   type="submit"
                   variant="ghost"

@@ -95,7 +95,7 @@ export default function Marketplace() {
   }
   const auth = async () => {
     try {
-      const res = await axios.post(`${apiUrl}/autenticar`, { token })
+      const res = await axios.post(`${apiUrl}/z1/autenticar`, { token })
       if (res.data.success === false) {
         toast.warning('Sua sessão expirou faça login novamente')
         router.push('/')
