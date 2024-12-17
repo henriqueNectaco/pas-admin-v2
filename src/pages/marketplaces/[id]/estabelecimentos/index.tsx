@@ -16,7 +16,7 @@ import { apiUrl } from '@/lib'
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { token } = nextCookies(context)
 
-  const authRes = await axios.post(`${apiUrl}/autenticar`, { token })
+  const authRes = await axios.post(`${apiUrl}/z1/autenticar`, { token })
 
   if (authRes.data.success === false) {
     return {
