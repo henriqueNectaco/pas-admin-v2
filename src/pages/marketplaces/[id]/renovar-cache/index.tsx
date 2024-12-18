@@ -2,31 +2,32 @@ import DropDownMenuCache from '@/components/dropdownmenu'
 import { parseDate } from '@internationalized/date'
 import { formatDateToYYYYMMDD, today } from '@/lib'
 import { ChangeEvent, useEffect, useState } from 'react'
-import DatePickerComponent from '@/components/date-picker'
 import { Input } from '@nextui-org/input'
 import { Button } from '@nextui-org/button'
 import axios from 'axios'
 import { toast } from 'sonner'
-import { DateRangePicker } from '@nextui-org/date-picker'
-import { DateValue } from '@nextui-org/react'
+import { DatePicker, DateRangePicker } from '@nextui-org/date-picker'
+import { DateValue, RangeValue, CalendarDate } from '@nextui-org/react'
 
 export type typeDataRenovarCache = {
   date: string | null
 }
 
 export default function RenovarCachePage() {
-  const [valueDateRange, setValueDateRange] = useState({
-    start: parseDate(today), // Data atual
-    end: parseDate(today), // Último dia do mês
-  })
+  const [valueDateRange, setValueDateRange] =
+    useState<RangeValue<CalendarDate> | null>({
+      start: parseDate(today), // Data atual
+      end: parseDate(today), // Último dia do mês
+    })
 
   const [data, setData] = useState<typeDataRenovarCache>({
     date: null,
   })
 
-  const [valueDataRecebimento, setValueDataRecebimento] = useState<DateValue>(
-    parseDate(today),
-  )
+  const [valueDataRecebimento, setValueDataRecebimento] =
+    useState<DateValue | null>(
+      parseDate(today), // Inicializa com a data atual
+    )
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -53,8 +54,12 @@ export default function RenovarCachePage() {
       setData((prev) => ({
         ...prev,
         date: formatDateToYYYYMMDD(valueDataRecebimento),
-        startDate: formatDateToYYYYMMDD(valueDateRange.start),
-        endDate: formatDateToYYYYMMDD(valueDateRange.end),
+        startDate: valueDateRange
+          ? formatDateToYYYYMMDD(valueDateRange.start)
+          : null,
+        endDate: valueDateRange
+          ? formatDateToYYYYMMDD(valueDateRange.end)
+          : null,
       }))
     }
   }, [valueDataRecebimento, valueDateRange, setValueDateRange])
@@ -74,13 +79,18 @@ export default function RenovarCachePage() {
                 variant="flat"
                 color="default"
                 label="Selecione um intervalo"
-                onChange={setValueDateRange}
+                onChange={setValueDateRange} // Passando setValueDateRange para lidar com RangeValue<CalendarDate> | null
                 value={valueDateRange}
               />
-              <DatePickerComponent
+              <DatePicker
+                radius="sm"
+                color="primary"
+                variant="faded"
+                labelPlacement="inside"
+                size="md"
+                label={'Data de recebimento'}
                 value={valueDataRecebimento}
-                onChange={setValueDataRecebimento}
-                label="Data de recebimento"
+                onChange={setValueDataRecebimento} // Passando setValueDataRecebimento que aceita DateValue | null
               />
             </div>
             <div className=" row-span-3 gap-4 ">

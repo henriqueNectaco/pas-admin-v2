@@ -11,12 +11,12 @@ export type typeServices = {
 export type datePickerProps = {
   value: RangeValue<DateValue> | null | undefined
   variant: 'flat' | 'bordered' | 'faded' | 'underlined' | undefined
-  setValue: (value: RangeValue<DateValue>) => void
+  setValue: (value: RangeValue<DateValue> | null) => void
 }
 
 export type TypePropsDashComponent = {
   reprocessarSaldo: () => void
-  setValue: (value: RangeValue<DateValue>) => void
+  setValue: (value: RangeValue<DateValue> | null) => void
   reprocessarVenda: () => void
   idEstabelecimentoReprocessarSaldo: Dispatch<
     SetStateAction<string | undefined>

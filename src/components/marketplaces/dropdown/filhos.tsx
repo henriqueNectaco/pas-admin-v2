@@ -16,11 +16,19 @@ import { objectMarketplace } from '@/types/marketplaces'
 import router from 'next/router'
 import { today, formatDateToYYYYMMDD, apiUrl } from '@/lib'
 
+interface ModalProps {
+  useDatePicker: boolean
+  useDesativar: boolean
+  useTaxForTransaction: boolean
+  useDropdownChangeParents: boolean
+  action: string
+}
+
 type typeProps = {
-  items: Array<string>
+  items: string[] // O tipo já estava correto, mas agora explícito como string[]
   onAction?: () => void
   fullWidth?: boolean
-  MarketplacesArray: Array<objectMarketplace> | undefined
+  MarketplacesArray?: objectMarketplace[] // `undefined` é opcional, mas pode ser mais explícito
   id?: string
   nomefantasia?: string
 }
@@ -28,22 +36,23 @@ type typeProps = {
 export default function DropDownMenuFilhos(props: typeProps) {
   const [id, setId] = useState<string | undefined>(undefined)
 
-  const [modalProps, setModalProps] = useState({
+  const [modalProps, setModalProps] = useState<ModalProps>({
     useDatePicker: false,
     useDesativar: false,
     useTaxForTransaction: false,
     useDropdownChangeParents: false,
     action: '',
   })
+
   const token = Cookies.get('token')
-  const [value, setValue] = useState<RangeValue<DateValue>>({
-    start: parseDate(today), // Data inicial
-    end: parseDate(today), // Último dia do mês
+  const [value, setValue] = useState<RangeValue<DateValue> | null>({
+    start: parseDate(today),
+    end: parseDate(today),
   })
   const [action, setAction] = useState('Confirmar')
   const [date, setDate] = useState({
-    startDate: formatDateToYYYYMMDD(value.start),
-    endDate: formatDateToYYYYMMDD(value.end),
+    startDate: parseDate(today),
+    endDate: parseDate(today),
   })
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
@@ -51,7 +60,6 @@ export default function DropDownMenuFilhos(props: typeProps) {
     try {
       await axios.put(
         `${apiUrl}/${props.id}/change-parent`,
-        // `${process.env.NEXT_PUBLIC_LOCAL}/posts`,
         { parentId: id },
         { headers: { Authorization: `Bearer ${token}` } },
       )
@@ -61,7 +69,6 @@ export default function DropDownMenuFilhos(props: typeProps) {
   }
 
   const reprocessarPedidos = async () => {
-    // ${apiUrl}/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}
     try {
       await axios.post(
         `${apiUrl}/estabelecimentos/${props.id}/reprocessar-pedidos?startDate=${date.startDate}&endDate=${date.endDate}`,
@@ -84,13 +91,17 @@ export default function DropDownMenuFilhos(props: typeProps) {
         break
     }
   }
+
   useEffect(() => {
-    setDate((prev) => ({
-      ...prev,
-      startDate: formatDateToYYYYMMDD(value.start),
-      endDate: formatDateToYYYYMMDD(value.end),
-    }))
+    if (value) {
+      setDate((prev) => ({
+        ...prev,
+        startDate: parseDate(formatDateToYYYYMMDD(value.start)),
+        endDate: parseDate(formatDateToYYYYMMDD(value.end)),
+      }))
+    }
   }, [value])
+
   return (
     <>
       <Dropdown shouldBlockScroll={true}>
@@ -126,7 +137,6 @@ export default function DropDownMenuFilhos(props: typeProps) {
                 useDesativar: false,
                 useTaxForTransaction: false,
               }))
-
               onOpen()
             } else if (key === 'Adicionar SSL') {
               router.push(
@@ -137,7 +147,7 @@ export default function DropDownMenuFilhos(props: typeProps) {
           color="primary"
           variant="solid"
         >
-          {props.items.map((i: string) => (
+          {props.items.map((i) => (
             <DropdownItem key={i}>{i}</DropdownItem>
           ))}
         </DropdownMenu>
