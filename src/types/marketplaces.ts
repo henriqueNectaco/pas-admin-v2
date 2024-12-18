@@ -103,7 +103,7 @@ export type ModalTypes = {
   onOpenChange: () => void
   isOpen: boolean
   action: string
-  setValue: (value: RangeValue<DateValue>) => void
+  setValue: (value: RangeValue<DateValue> | null) => void
   value: RangeValue<DateValue> | null | undefined
 }
 export type typeStep = {

@@ -36,7 +36,7 @@ export default function DropdownButton(props: TypeProps) {
     useDatePicker: true,
     useDesativar: false,
   })
-  const [value, setValue] = useState<RangeValue<DateValue>>({
+  const [value, setValue] = useState<RangeValue<DateValue> | null>({
     start: parseDate(today),
     end: parseDate(today),
   })
@@ -80,8 +80,8 @@ export default function DropdownButton(props: TypeProps) {
       const res = await axios.post(
         `${apiPas}/marketplace/import-establishment`,
         {
-          startDate: formatDateToYYYYMMDD(value.start),
-          endDate: formatDateToYYYYMMDD(value.end),
+          startDate: value ? formatDateToYYYYMMDD(value.start) : null,
+          endDate: value ? formatDateToYYYYMMDD(value.end) : null,
           marketplaceId: props.id,
         },
         { headers: { Authorization: `Bearer ${token}` } },
@@ -99,8 +99,8 @@ export default function DropdownButton(props: TypeProps) {
       const res = await axios.post(
         `${apiUrl}/marketplaces/${props.id}/importar-pedidos`,
         {
-          startDate: formatDateToYYYYMMDD(value.start),
-          endDate: formatDateToYYYYMMDD(value.end),
+          startDate: value ? formatDateToYYYYMMDD(value.start) : null,
+          endDate: value ? formatDateToYYYYMMDD(value.end) : null,
         },
         { headers: { Authorization: `Bearer ${token}` } },
       )
@@ -132,8 +132,8 @@ export default function DropdownButton(props: TypeProps) {
       await axios.post(
         `${apiUrl}/marketplaces/reprocessar-pedidos/${props.id}`,
         {
-          startDate: formatDateToYYYYMMDD(value.start),
-          endDate: formatDateToYYYYMMDD(value.end),
+          startDate: value ? formatDateToYYYYMMDD(value.start) : null,
+          endDate: value ? formatDateToYYYYMMDD(value.end) : null,
         },
         { headers: { Authorization: `Bearer ${token}` } },
       )

@@ -1,9 +1,9 @@
 import React from 'react'
-import { DateRangePicker, DateValue, RangeValue } from '@nextui-org/react'
-import { parseZonedDateTime } from '@internationalized/date'
+import { DateRangePicker, RangeValue } from '@nextui-org/react'
+import { parseZonedDateTime, ZonedDateTime } from '@internationalized/date'
 
 type PropsType = {
-  setValue: (value: RangeValue<DateValue>) => void | undefined
+  setValue: (value: RangeValue<ZonedDateTime> | null) => void
 }
 export default function DateRangeWithTimer(props: PropsType) {
   const today = new Date()

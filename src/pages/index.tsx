@@ -46,7 +46,7 @@ export default function Home() {
         router.push('/dashboard')
       } else {
         setIsLoading(false)
-        toast.warning(response.data.message)
+        toast.error(response.data.error)
       }
     } catch (error) {
       setIsLoading(false)
