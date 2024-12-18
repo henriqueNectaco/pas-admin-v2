@@ -33,7 +33,6 @@ export default function FormVendas(props: FormVendasTypes) {
           )}
           <Button
             type="submit"
-            // onClick={props.handleSearchOnClick}
             color="primary"
             variant="shadow"
             isLoading={props.Isloading}

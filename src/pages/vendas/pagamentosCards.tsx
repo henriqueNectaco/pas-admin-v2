@@ -33,14 +33,12 @@ type TypeProps = {
 }
 
 export default function PagamentosCards(props: TypeProps) {
-  // Fallback para garantir que os arrays não sejam undefined
   const arrayTittles = props.arrayTittles || []
   const contentArray = props.contentArray || []
   const dados = props.dados || []
 
   const Pstyles =
     'flex flex-row items-center md:justify-start justify-center p-2 text-green-400 gap-2'
-
   return (
     <div className="bg-gray-800 w-full lg:flex lg:flex-col items-center">
       <div className="bg-gray-800 w-full xl:flex xl:flex-col items-center p-4 hidden md:hidden lg:hidden">
