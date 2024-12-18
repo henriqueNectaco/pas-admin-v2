@@ -72,9 +72,7 @@ export default function Vendas() {
     } catch (error) {
       console.error(error)
       setIsLoadingSearchSale(false)
-      toast.warning(
-        'alo inesperado ocorreu :( verifiquei o console e a aba network',
-      )
+      toast.warning(`Algo inesperado ocorreu`)
     }
   }
   const auth = async () => {
@@ -378,6 +376,7 @@ export default function Vendas() {
             {responseData.pagamentos.length === 0 && (
               <div className="p-4 w-full lg:grid xl:grid lg:grid-cols-2">
                 <Button
+                  disabled={isLoadingReprocessSale}
                   fullWidth
                   color="danger"
                   variant="shadow"

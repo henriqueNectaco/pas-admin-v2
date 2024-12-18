@@ -7,19 +7,6 @@ export async function middleware(req: NextRequest) {
   if (!token) {
     return NextResponse.redirect(new URL('/', req.url))
   }
-  // try {
-  //   const response = await axios.post(`${apiUrl}/z1/autenticar`, {
-  //     token,
-  //   })
-
-  //   if (response.data.success === false) {
-  //     return NextResponse.redirect(new URL('/', req.url))
-  //   }
-  // } catch (error) {
-  //   console.error('Erro ao autenticar:', error)
-  //   return NextResponse.redirect(new URL('/', req.url))
-  // }
-
   return NextResponse.next()
 }
 

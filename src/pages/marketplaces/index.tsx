@@ -23,7 +23,7 @@ import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces, {
   marketplaceItemsTypes,
-} from '../../components/marketplaces/table/table'
+} from '@/components/marketplaces/table/table'
 import {
   today,
   formatDateRangeTimer,
@@ -130,7 +130,6 @@ export default function Marketplace() {
 
   const handleImportAllSales = async () => {
     try {
-      // api/marketplaces/importar-pedidos
       const res = await axios.post(
         `${apiUrl}/marketplaces/importar-pedidos`,
         {
