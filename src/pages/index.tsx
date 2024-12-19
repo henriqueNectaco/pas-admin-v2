@@ -12,7 +12,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { EyeSlash, Eye } from 'phosphor-react'
 import { apiUrl } from '@/lib'
 
-// Esquema de validação com Zod
 const Formschema = z.object({
   email: z.string().email('E-mail inválido'),
   senha: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres'),
@@ -30,7 +29,7 @@ export default function Home() {
     formState: { errors, isValid },
   } = useForm<FormschemaData>({
     resolver: zodResolver(Formschema),
-    mode: 'onChange', // Isso permitirá que a validação ocorra a cada mudança no formulário
+    mode: 'onChange',
   })
 
   const router = useRouter()
@@ -166,9 +165,6 @@ export default function Home() {
                 >
                   Entrar
                 </Button>
-                {/* <Checkbox color="primary" radius="md" size="md" className="">
-                  Manter conectado?
-                </Checkbox> */}
               </div>
             </form>
           </div>
