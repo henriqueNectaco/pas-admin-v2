@@ -19,6 +19,7 @@ const Formschema = z.object({
 type FormschemaData = z.infer<typeof Formschema>
 
 export default function Home() {
+  const token = Cookies.get('token')
   const [isVisible, setIsVisible] = useState(false)
   const toggleVisibility = () => setIsVisible(!isVisible)
   const [isLoading, setIsLoading] = useState(false)
@@ -78,7 +79,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    auth()
+    if (token) auth()
   }, [])
 
   return (
