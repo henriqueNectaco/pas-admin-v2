@@ -7,6 +7,8 @@ export const api = process.env.NEXT_PUBLIC_API
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL
 export const localUrl = process.env.NEXT_PUBLIC_LOCAL
 export const apiPas = process.env.NEXT_PUBLIC_API_PAS
+  ? process.env.NEXT_PUBLIC_API_PAS
+  : 'https://pas.nectaco.com.br'
 const newDate = new Date()
 
 export const token = Cookies.get('token')
