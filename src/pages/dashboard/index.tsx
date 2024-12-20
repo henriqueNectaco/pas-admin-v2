@@ -19,7 +19,7 @@ import { RangeValue, DateValue } from '@nextui-org/react'
 export default function DashBoard() {
   const newDate = new Date()
   const token = Cookies.get('token')
-  const [value, setValue] = useState<RangeValue<DateValue>>({
+  const [value, setValue] = useState<RangeValue<DateValue> | null>({
     start: parseDate(newDate.toISOString().split('T')[0]), // Data atual
     end: parseDate(newDate.toISOString().split('T')[0]), // Último dia do mês
   })
@@ -87,7 +87,7 @@ export default function DashBoard() {
     setIsLoadingReprocessarVenda(true)
     try {
       const res = await axios.get(
-        `${apiUrl}/z1/reprocessar-vendas/${idEstabelecimentoReprocessarVenda}/${formatDateToYYYYMMDD(value.start)}/${formatDateToYYYYMMDD(value.end)}`,
+        `${apiUrl}/z1/reprocessar-vendas/${idEstabelecimentoReprocessarVenda}/${value ? formatDateToYYYYMMDD(value.start) : null}/${value ? formatDateToYYYYMMDD(value.end) : null}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },

@@ -23,7 +23,7 @@ import { CaretDown } from 'phosphor-react'
 import { toast } from 'sonner'
 import TableMarketPlaces, {
   marketplaceItemsTypes,
-} from '../../components/marketplaces/table/table'
+} from '@/components/marketplaces/table/table'
 import {
   today,
   formatDateRangeTimer,
@@ -53,16 +53,20 @@ import { api } from '../api/useApi'
 //   return { props: { data: fetchMarketplacesData.data.marketplaces } }
 // }
 
+type DateRange = {
+  startDate: string | null
+  endDate: string | null
+} | null
 export default function Marketplace() {
   //   {
   //   data,
   // }: InferGetServerSidePropsType<typeof getServerSideProps>
-  const [value, setValue] = useState<RangeValue<DateValue>>({
+  const [value, setValue] = useState<RangeValue<DateValue> | null>({
     start: parseDate(today),
     end: parseDate(today),
   })
 
-  const [date, setDate] = useState({
+  const [date, setDate] = useState<DateRange>({
     startDate: '',
     endDate: '',
   })
@@ -95,7 +99,7 @@ export default function Marketplace() {
   }
   const auth = async () => {
     try {
-      const res = await axios.post(`${apiUrl}/autenticar`, { token })
+      const res = await axios.post(`${apiUrl}/z1/autenticar`, { token })
       if (res.data.success === false) {
         toast.warning('Sua sessão expirou faça login novamente')
         router.push('/')
@@ -109,8 +113,8 @@ export default function Marketplace() {
       const res = await axios.post(
         `${apiUrl}/marketplaces/reprocessar-pedidos`,
         {
-          startDate: date.startDate,
-          endDate: date.endDate,
+          startDate: date ? date.startDate : null,
+          endDate: date ? date.endDate : null,
         },
         { headers: { Authorization: `Bearer ${token}` } },
       )
@@ -126,12 +130,11 @@ export default function Marketplace() {
 
   const handleImportAllSales = async () => {
     try {
-      // api/marketplaces/importar-pedidos
       const res = await axios.post(
         `${apiUrl}/marketplaces/importar-pedidos`,
         {
-          startDate: date.startDate,
-          endDate: date.endDate,
+          startDate: date ? date.startDate : null,
+          endDate: date ? date.endDate : null,
         },
         { headers: { Authorization: `Bearer ${token}` } },
       )
@@ -181,15 +184,13 @@ export default function Marketplace() {
   }, [])
 
   useEffect(() => {
-    const dateObjStart = convertToDateObjectTimer(value.start)
-    const dateObjEnd = convertToDateObjectTimer(value.end)
+    const dateObjStart = value ? convertToDateObjectTimer(value.start) : null
+    const dateObjEnd = value ? convertToDateObjectTimer(value.end) : null
 
     setDate({
-      startDate: formatDateRangeTimer(dateObjStart),
-      endDate: formatDateRangeTimer(dateObjEnd),
+      startDate: dateObjStart ? formatDateRangeTimer(dateObjStart) : null,
+      endDate: dateObjEnd ? formatDateRangeTimer(dateObjEnd) : null,
     })
-
-    // const talvez = format(stringifff, 'yyyy-mm-ddd HH:mm')
   }, [value])
   return (
     <div

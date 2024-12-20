@@ -45,7 +45,8 @@ export default function Vendas() {
       console.error(error)
     }
   }
-  const handleSearch = async () => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setIsLoadingSearchSale(true)
     try {
       if (vendaId === '') {
@@ -71,11 +72,12 @@ export default function Vendas() {
     } catch (error) {
       console.error(error)
       setIsLoadingSearchSale(false)
+      toast.warning(`Algo inesperado ocorreu`)
     }
   }
   const auth = async () => {
     try {
-      const res = await axios.post(`${apiUrl}/autenticar`, { token })
+      const res = await axios.post(`${apiUrl}/z1/autenticar`, { token })
       if (res.data.success === false) {
         toast.error('Sua sessão expirou faça login novamente')
         Router.push('/')
@@ -103,7 +105,6 @@ export default function Vendas() {
             handleCleanInput={handleCleanInput}
             vendaId={vendaId}
             setInputIdDaVenda={setVendaId}
-            handleSearch={handleSearch}
           />
           {responseData ? (
             <div className=" bg-mygray p-4 lg:w-4/6 gap-4 w-full h-full flex flex-col lg:grid lg:grid-cols-2">
@@ -375,6 +376,7 @@ export default function Vendas() {
             {responseData.pagamentos.length === 0 && (
               <div className="p-4 w-full lg:grid xl:grid lg:grid-cols-2">
                 <Button
+                  disabled={isLoadingReprocessSale}
                   fullWidth
                   color="danger"
                   variant="shadow"
